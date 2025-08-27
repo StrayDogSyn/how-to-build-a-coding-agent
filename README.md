@@ -2,7 +2,9 @@
 
 A hands-on workshop for learning how to build AI agents with progressively increasing capabilities. This repository contains six different agent implementations that demonstrate the evolution from a simple chat interface to a fully capable agent with file system access, code search, and tool execution.
 
-Refer to the blog post at https://ghuntley.com/agent/ to learn more.
+
+Refer to the blog post at [https://ghuntley.com/agent/](https://ghuntley.com/agent/) to learn more.
+
 
 ## 🎯 Learning Objectives
 
@@ -19,6 +21,7 @@ By working through this workshop, you will learn:
 
 All applications share a common architecture pattern with a central event loop that handles user input, sends messages to Claude, processes tool calls, and returns results.
 
+ 
 ```mermaid
 graph TB
     subgraph "Agent Architecture"
@@ -59,6 +62,7 @@ graph TB
 
 The workshop is structured as a progression through six applications, each building upon the previous one's capabilities:
 
+ 
 ```mermaid
 graph LR
     subgraph "Application Progression"
@@ -85,10 +89,15 @@ graph LR
     F -.-> L
 ```
 
+ 
+ 
+ 
 ### 1. Basic Chat (`chat.go`)
+
 **Purpose**: Establish the foundation - a simple chat interface with Claude
 
 **Features**:
+
 - Basic conversation loop
 - User input handling
 - API integration with Anthropic
@@ -97,15 +106,21 @@ graph LR
 **Key Learning**: Understanding the core conversation pattern and API integration.
 
 **Usage**:
+
 ```bash
 go run chat.go
 go run chat.go --verbose  # Enable detailed logging
 ```
 
+ 
+ 
+ 
 ### 2. File Reading Agent (`read.go`)
+
 **Purpose**: Add the first tool - file reading capability
 
 **Features**:
+
 - Everything from `chat.go`
 - `read_file` tool for reading file contents
 - Tool definition and schema generation
@@ -114,15 +129,21 @@ go run chat.go --verbose  # Enable detailed logging
 **Key Learning**: How to implement and register tools, handle tool calls from Claude.
 
 **Usage**:
+
 ```bash
 go run read.go
 # Try: "Read the contents of fizzbuzz.js"
 ```
 
+ 
+ 
+ 
 ### 3. File Listing Agent (`list_files.go`)
+
 **Purpose**: Expand file system access with directory listing
 
 **Features**:
+
 - Everything from `read.go`
 - `list_files` tool for directory exploration
 - Multiple tool registration
@@ -131,16 +152,23 @@ go run read.go
 **Key Learning**: Managing multiple tools and file system operations.
 
 **Usage**:
+
 ```bash
 go run list_files.go
 # Try: "List all files in this directory"
 # Try: "What files are available and what's in fizzbuzz.js?"
 ```
 
+ 
+ 
 ### 4. Bash Command Agent (`bash_tool.go`)
+
 **Purpose**: Add shell command execution capabilities
 
+
 **Features**:
+
+
 - Everything from `list_files.go`
 - `bash` tool for executing shell commands
 - Command output capture
@@ -149,16 +177,22 @@ go run list_files.go
 **Key Learning**: Safe command execution and output handling.
 
 **Usage**:
+
 ```bash
 go run bash_tool.go
 # Try: "Run git status"
 # Try: "List all .go files using bash"
 ```
 
+ 
+ 
 ### 5. Full File Editing Agent (`edit_tool.go`)
+
 **Purpose**: Complete agent with file modification capabilities
 
+
 **Features**:
+
 - Everything from `bash_tool.go`
 - `edit_file` tool for modifying files
 - File creation and directory creation
@@ -167,16 +201,21 @@ go run bash_tool.go
 **Key Learning**: File manipulation, validation, and comprehensive agent capabilities.
 
 **Usage**:
+
 ```bash
 go run edit_tool.go
 # Try: "Create a simple Python hello world script"
 # Try: "Add a comment to the top of fizzbuzz.js"
 ```
 
+ 
 ### 6. Code Search Agent (`code_search_tool.go`)
+
 **Purpose**: Powerful code search capabilities using ripgrep
 
+
 **Features**:
+
 - Everything from `list_files.go` and `bash_tool.go`
 - `code_search` tool for finding code patterns
 - Ripgrep integration for fast searching
@@ -186,6 +225,7 @@ go run edit_tool.go
 **Key Learning**: Code discovery, pattern matching, and search optimization.
 
 **Usage**:
+
 ```bash
 go run code_search_tool.go
 # Try: "Find all function definitions in Go files"
@@ -197,6 +237,7 @@ go run code_search_tool.go
 
 The tool system uses a consistent pattern across all applications:
 
+ 
 ```mermaid
 classDiagram
     class Agent {
@@ -251,23 +292,27 @@ classDiagram
 ## 🚀 Setup
 
 ### Prerequisites
+
 - [devenv](https://devenv.sh/) (recommended) or Go 1.24.2+
 - Anthropic API key
 
 ### Environment Setup
 
 1. **Using devenv (recommended)**:
+
 ```bash
 devenv shell  # Enters development environment with all dependencies
 ```
 
-2. **Manual setup**:
+1. **Manual setup**:
+
 ```bash
 # Ensure Go 1.24.2+ is installed
 go mod tidy
 ```
 
 ### API Key Configuration
+
 ```bash
 export ANTHROPIC_API_KEY="your-api-key-here"
 ```
@@ -275,6 +320,7 @@ export ANTHROPIC_API_KEY="your-api-key-here"
 ## 📖 Usage Examples
 
 ### Basic Chat
+
 ```bash
 $ go run chat.go
 Chat with Claude (use 'ctrl-c' to quit)
@@ -283,6 +329,7 @@ Claude: Hello! How can I help you today?
 ```
 
 ### File Operations
+
 ```bash
 $ go run edit_tool.go
 Chat with Claude (use 'ctrl-c' to quit)
@@ -298,6 +345,7 @@ Claude: This is a riddle! The answer is "a horse"...
 ```
 
 ### Code Search Operations
+
 ```bash
 $ go run code_search_tool.go
 Chat with Claude (use 'ctrl-c' to quit)
@@ -315,8 +363,9 @@ Claude: There are no TODO comments in the current codebase.
 ```
 
 ### Debugging with Verbose Mode
+
 ```bash
-$ go run edit_tool.go --verbose
+go run edit_tool.go --verbose
 # Provides detailed logging of:
 # - API calls and timing
 # - Tool execution details
@@ -354,31 +403,37 @@ hello          # Custom greeting script
 ## 🎓 Workshop Flow
 
 ### Phase 1: Understanding the Basics
+
 1. Start with `chat.go` to understand the conversation loop
 2. Examine the API integration and response handling
 3. Experiment with verbose logging
 
 ### Phase 2: Adding Tools
+
 1. Progress to `read.go` to see tool integration
 2. Understand schema generation and tool definitions
 3. Practice with file reading operations
 
 ### Phase 3: Building Complexity
+
 1. Explore `list_files.go` for multiple tool management
 2. Test directory traversal and file system operations
 3. Learn about tool combination strategies
 
 ### Phase 4: System Integration
+
 1. Use `bash_tool.go` to see command execution
 2. Understand error handling and output capture
 3. Practice with system integration
 
 ### Phase 5: Full Agent Capabilities
+
 1. Master `edit_tool.go` for complete file operations
 2. Understand validation and safety measures
 3. Build complete agent workflows
 
 ### Phase 6: Advanced Code Discovery
+
 1. Use `code_search_tool.go` for powerful code searching
 2. Learn ripgrep integration and pattern matching
 3. Practice efficient code discovery and analysis
@@ -386,7 +441,9 @@ hello          # Custom greeting script
 ## 🔍 Key Concepts Demonstrated
 
 ### Event Loop Pattern
+
 All agents use the same core event loop that:
+
 1. Accepts user input
 2. Maintains conversation history
 3. Calls Claude API with tools
@@ -395,6 +452,7 @@ All agents use the same core event loop that:
 6. Returns results to Claude for final response
 
 ### Tool Definition Pattern
+
 ```go
 var ToolDefinition = ToolDefinition{
     Name:        "tool_name",
@@ -405,31 +463,37 @@ var ToolDefinition = ToolDefinition{
 ```
 
 ### Schema Generation
+
 Automatic JSON schema generation from Go structs using reflection and jsonschema tags.
 
 ### Error Handling
+
 Consistent error handling across all tools with proper logging and user feedback.
 
 ### Progressive Enhancement
+
 Each application builds upon the previous one, demonstrating how to gradually add capabilities to an agent system.
 
 ## 🚦 Common Issues and Solutions
 
 ### API Key Issues
+
 - Ensure `ANTHROPIC_API_KEY` is set in your environment
 - Check that your API key has sufficient credits
 
 ### Tool Execution Errors
+
 - Use `--verbose` flag to see detailed error logs
 - Check file permissions for file operations
 - Verify paths are relative to the working directory
 
 ### Environment Issues
+
 - Use `devenv shell` for consistent environment
 - Run `go mod tidy` if dependencies are missing
 - Check Go version compatibility (1.24.2+)
 
-## 🎯 Next Steps
+### Next Steps
 
 After completing this workshop, consider exploring:
 
